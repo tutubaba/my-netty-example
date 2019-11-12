@@ -1,10 +1,7 @@
 package com.moon.helloword;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.*;
 import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.net.InetAddress;
 import java.util.Date;
@@ -12,7 +9,7 @@ import java.util.logging.Logger;
 
 
 @Sharable
-public class ServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler  extends ChannelInboundHandlerAdapter {
 
     Logger LOG = Logger.getLogger("ServerHandler");
     @Override
@@ -28,29 +25,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         LOG.info("===channelRead===");
         LOG.info("HelloWorldClientHandler read Message:" + msg);
-    }
-
-
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, String request) throws Exception {
-        // Generate and write a response.
-        LOG.info("===channelRead0===");
-        String response;
-        boolean close = false;
-        if (request.isEmpty()) {
-            response = "Please type something.\r\n";
-        } else if ("bye".equals(request.toLowerCase())) {
-            response = "Have a good day!\r\n";
-            close = true;
-        } else {
-            response = "Did you say '" + request + "'?\r\n";
-        }
-
-        ChannelFuture future = ctx.write(response);
-
-        if (close) {
-            future.addListener(ChannelFutureListener.CLOSE);
-        }
     }
 
     @Override
