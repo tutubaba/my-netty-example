@@ -1,0 +1,14 @@
+syntax = "proto2"; // PB协议版本
+package com.moon.protobufdemo.protobuf ;
+
+
+option optimize_for = SPEED;
+
+message DemoRequest {
+  optional string requestMsg = 1;
+}
+
+message DemoResponse {
+  optional uint32 ret = 1;
+  optional string responseMsg = 2;
+}
