@@ -113,7 +113,7 @@ public class SampleNioServer {
             serverSocketChannel.socket().bind(addr);
             // setup our selector and register the main socket on it
             selector = Selector.open();
-            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         } catch (IOException e) {
             Log.log("Couldn't setup server socket");
             Log.log(e.getMessage());
